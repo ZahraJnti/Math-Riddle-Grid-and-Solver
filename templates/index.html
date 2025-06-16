@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Math Riddle Grid</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+    <link rel="stylesheet" href="../static/css/style.css">
 </head>
 <body>
+
     <div class="container">
-        <h1>🧠 Math Riddle Grid</h1>
+        <h1>Math Riddle Grid</h1>
 
         <div class="controls">
-            <button id="generate">ساخت جدول تصادفی</button>
-            <button id="manual">وارد کردن دستی</button>
-            <button id="solve">حل کن</button>
+            <button id="generate-btn">Generate Random</button>
+            <button id="manual-btn">Manual Entry</button>
+            <button id="solve-btn">Solve</button>
         </div>
 
         <table id="grid">
@@ -26,18 +26,16 @@
             {% endfor %}
         </table>
 
-        <div class="number-bank">
-            <span class="number">1</span>
-            <span class="number">2</span>
-            <span class="number">3</span>
-            <span class="number">4</span>
-            <span class="number">5</span>
-            <span class="number">6</span>
-            <span class="number">7</span>
-            <span class="number">8</span>
-            <span class="number">9</span>
+        <div class="number-pool">
+            <h3>Available Numbers</h3>
+            <div id="numbers">
+                {% for num in range(1, 10) %}
+                <span class="number" data-value="{{ num }}">{{ num }}</span>
+                {% endfor %}
+            </div>
         </div>
     </div>
+
+    <script src="static/js/main.js'"></script>
 </body>
 </html>
-
