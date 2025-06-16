@@ -3,39 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <title>Math Riddle Grid</title>
-    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-
     <div class="container">
         <h1>Math Riddle Grid</h1>
-
+        
+        <!-- دکمه‌های بالا -->
         <div class="controls">
-            <button id="generate-btn">Generate Random</button>
-            <button id="manual-btn">Manual Entry</button>
-            <button id="solve-btn">Solve</button>
+            <button id="generateBtn">Generate Random Grid</button>
+            <button id="designBtn">Design Custom Grid</button>
+            <button id="solveBtn">Solve</button>
         </div>
+        
+        <!-- جدول -->
+        <div class="grid">
+            <table id="gridTable">
+                <tbody>
+                    {% for row in grid %}
+                    {% set rowloop = loop %}
+                    <tr>
+                        {% for cell in row %}
+                        <td data-row="{{ rowloop.index0 }}" data-col="{{ loop.index0 }}">
+                            {% if cell.value != '0' %}
+                                {{ cell.value }}
+                            {% endif %}
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
 
-        <table id="grid">
-            {% for row in range(5) %}
-            <tr>
-                {% for col in range(5) %}
-                <td class="cell" data-row="{{ row }}" data-col="{{ col }}"></td>
-                {% endfor %}
-            </tr>
-            {% endfor %}
+            </tbody>
         </table>
 
-        <div class="number-pool">
-            <h3>Available Numbers</h3>
-            <div id="numbers">
-                {% for num in range(1, 10) %}
-                <span class="number" data-value="{{ num }}">{{ num }}</span>
-                {% endfor %}
-            </div>
+
+
+        </div>
+        
+        <!-- انتخاب اعداد -->
+        <div class="number-selector">
+            {% for num in range(1, 10) %}
+                <button class="number-btn" data-number="{{ num }}">{{ num }}</button>
+            {% endfor %}
         </div>
     </div>
 
-    <script src="static/js/main.js'"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
+<div id="loadingOverlay" style="display: none;">
+    <div class="loader"></div>
+</div>
+
 </html>

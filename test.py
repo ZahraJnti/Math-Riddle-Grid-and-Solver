@@ -6,19 +6,13 @@ def safe_eval(a, op, b):
     if op == "/" and b == 0:
         return 0
     if op == "/":
-        return a / b  # تقسیم صحیح
+        return a // b  # تقسیم صحیح
     return eval(f"{a}{op}{b}")
 
-def generate_grid():
+def g():
     size = 7
-
-    # تولید اعداد ورودی
-    numbers = list(range(1, 10))
-    random.shuffle(numbers)
-
     grid = [[None for _ in range(size)] for _ in range(size)]
-
-    # جایگذاری inputها
+    numbers = list(range(1, 100))
     num_idx = 0
     for i in range(size):
         for j in range(size):
@@ -76,3 +70,8 @@ def generate_grid():
         grid[6][j]["value"] = str(result)
 
     return grid
+
+gridd = g()
+
+for row in gridd:
+    print("  ".join(cell["value"] if cell["value"] is not None else " " for cell in row))

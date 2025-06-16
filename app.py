@@ -1,29 +1,31 @@
-
 from flask import Flask, render_template, request, jsonify
-from logic.generator import generate_puzzle
-from logic.solver import solve_puzzle
+from logic.generator import generate_grid
+from logic.solver import solve_grid
 
 app = Flask(__name__)
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    grid = generate_grid()
+    return render_template("index.html", grid=grid)
 
-@app.route("/generate", methods=["POST"])
+@app.route("/generate", methods=["GET"])
 def generate():
-    puzzle_data = generate_puzzle()
-    return jsonify({"status": "ok", "grid": puzzle_data})
+    try:
+        grid = generate_grid()
+        return jsonify({"success": True, "grid": grid})
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)}), 500
 
 @app.route("/solve", methods=["POST"])
 def solve():
-    data = request.get_json()
-    grid = data.get("grid")
-
-    if not grid:
-        return jsonify({"status": "error", "message": "No grid provided."})
-
-    solution = solve_puzzle(grid)
-    return jsonify({"status": "ok", "solution": solution})
+    try:
+        data = request.json
+        grid = data.get("grid")
+        solution = solve_grid(grid)
+        return jsonify({"success": True, "solution": solution})
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)}), 500
 
 if __name__ == "__main__":
     app.run(debug=True)
